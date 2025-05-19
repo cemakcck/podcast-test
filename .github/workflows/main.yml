@@ -1,12 +1,17 @@
 name: Generate Podcast Feeds
+
 on: push
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+
+      - name: Build Docker container
+        run: docker build -t podcast-feed .
+
       - name: Run Feed Generator
-        uses: cemakcck/podcast-generator@main
-          
-      
+        run: docker run --rm podcast-feed
