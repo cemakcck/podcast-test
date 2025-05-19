@@ -1,17 +1,21 @@
-name: Generate Podcast Feeds
+name: Generate Podcast Feed
 
-on: push
+on:
+  push:
+    paths:
+      - feed.yaml
+      - .github/workflows/**
 
 jobs:
-  build:
+  generate-feed:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Build Docker container
-        run: docker build -t podcast-feed .
-
-      - name: Run Feed Generator
-        run: docker run --rm podcast-feed
+      - name: Run Podcast Generator Action
+        uses: cemakcck/podcast-generator@main
